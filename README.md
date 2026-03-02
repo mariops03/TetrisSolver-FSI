@@ -20,16 +20,25 @@ Built as a university project for the **Fundamentos de Sistemas Inteligentes (FS
 
 The A* implementation treats Tetris as a search problem: each state is a board configuration, and each action is placing a piece at a specific position and rotation. The algorithm explores states ordered by `f(n) = g(n) + h(n)`, where the cost function balances multiple board quality metrics.
 
-### Heuristic
+### Cost functions
 
-The evaluation function combines four weighted factors:
+The algorithm uses two separate evaluation functions — one for the accumulated path cost `g(n)` and one for the heuristic estimate `h(n)`:
+
+**Heuristic h(n)** — estimates remaining board "badness":
 
 | Factor | Weight | Goal |
 |--------|--------|------|
 | **Aggregate height** | 0.5 | Penalize tall stacks |
 | **Holes** | 1.0 | Penalize gaps below filled cells |
 | **Irregularity** | 0.5 | Penalize uneven column heights |
-| **Cleared lines** | 10.0 | Reward completing full rows |
+
+**Step cost g(n)** — measures the cost of each piece placement (accumulated across the path):
+
+| Factor | Weight | Goal |
+|--------|--------|------|
+| **Aggregate height** | 0.5 | Penalize tall stacks |
+| **Holes** | 1.0 | Penalize gaps below filled cells |
+| **Cleared lines** | −10.0 | Reward completing full rows |
 
 ### How it works
 
